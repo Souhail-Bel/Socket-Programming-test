@@ -22,17 +22,27 @@ if __name__ == "__main__":
     request += "\r\n" # important empty line
     request = request.encode("ISO-8859-1")
     
+    try:
+        with socket.socket() as s:
+            s.connect((host, port))
+            print("Connection established.")
+
+            # sendall() is used instead of send()
+            # The latter might miss some bytes
+
+            s.sendall(request)
+            
+            res = b""
+            
+            while True:
+                buff = s.recv(4096)
+                if not buff:
+                    break
+                res += buff
+
+            print(res.decode("ISO-8859-1", errors='replace'))
+            
+    except Exception as e:
+        print("Connection failed!")
+        print(e)
     
-    s = socket.socket()
-    
-    s.connect((host, port))
-    
-    # sendall() is used instead of send()
-    # The latter might miss some bytes
-    
-    s.sendall(request)
-    res = s.recv(4096).decode("ISO-8859-1")
-    
-    print(res)
-    
-    s.close()
