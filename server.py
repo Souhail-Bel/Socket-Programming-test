@@ -1,10 +1,11 @@
 import sys
 import socket
 
-msg = "10-4, networking is awesome."
+msg = "<h1>Hello there!</h1>"
+msg += "<h2>Lorem ipsum, there goes my sockets</h2>"
 
 response = "HTTP/1.1 200 OK\r\n"
-response += "Content-Type: text/plain\r\n"
+response += "Content-Type: text/html\r\n"
 response += f"Content-Length: {len(msg)}\r\n"
 response += "Connection: close\r\n"
 response += "\r\n"
