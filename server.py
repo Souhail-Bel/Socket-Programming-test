@@ -13,6 +13,7 @@ response += msg
 response = response.encode("ISO-8859-1")
 
 port = 28333
+LAN_IP = "192.168.1.144"
 
 if __name__ == "__main__":
     
@@ -28,12 +29,19 @@ if __name__ == "__main__":
     # Prevent address already in use error on bind()
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     
-    s.bind(('', port))
+    # use '' for localhost
+    s.bind((LAN_IP, port))
     
     s.listen()
     
-    new_conn = s.accept()
-    new_sock = new_conn[0]
+    
+    while 1:
+        new_conn = s.accept()
+        new_sock = new_conn[0]
+        
+        new_sock.sendall(response)
+        
+        new_sock.close()
     
     s.close()
     
