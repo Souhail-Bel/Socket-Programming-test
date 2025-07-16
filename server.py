@@ -53,9 +53,11 @@ if __name__ == "__main__":
                     
                     if b"\r\n\r\n" in request:
                         break
-                
+
+                request = request.decode("ISO-8859-1", errors='replace')
+                print("REQUEST METHOD: ", request.split(' ')[0])
                 print("REQUEST RECEIVED:")
-                print(request.decode("ISO-8859-1", errors='replace'))
+                print(request)
                 
                 new_sock.sendall(response)
                 print("Successfully responded.")
