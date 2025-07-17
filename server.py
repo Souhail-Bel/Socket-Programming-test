@@ -2,6 +2,8 @@ import sys, os
 import socket
 import traceback
 
+PATH = "./server/"
+
 MIME = {
     ".txt"  : "text/plain",
     ".html" : "text/html",
@@ -13,13 +15,15 @@ MIME = {
     ".jpeg" : "image/jpeg"
 }
 
+
+
 # Not found response
 
 NOT_FOUND = "HTTP/1.1 404 NOT FOUND\r\n"
 NOT_FOUND += "Content-Type: text/plain\r\n"
-NOT_FOUND += "Content-Length: 16\r\n"
+NOT_FOUND += "Content-Length: 18\r\n"
 NOT_FOUND += "Connection: close\r\n"
-NOT_FOUND += "404 NOT FOUND :P"
+NOT_FOUND += "404 NOT FOUND :P\r\n"
 NOT_FOUND = NOT_FOUND.encode("ISO-8859-1")
 
 def make_resp(request: str) -> bytes:
@@ -29,7 +33,7 @@ def make_resp(request: str) -> bytes:
     ext = os.path.splitext(file_name)[1]
     
     try:
-        with open(file_name, 'rb') as f:
+        with open(PATH + file_name, 'rb') as f:
             msg = f.read()
     except Exception as e:
         print(e)
