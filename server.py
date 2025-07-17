@@ -1,28 +1,32 @@
 import sys
 import socket
 
-msg = "<h1>Hello there!</h1>"
-msg += "<h2>Lorem ipsum, there goes my sockets</h2>"
 
-response = "HTTP/1.1 200 OK\r\n"
-response += "Content-Type: text/html\r\n"
-response += f"Content-Length: {len(msg)}\r\n"
-response += "Connection: close\r\n"
-response += "\r\n"
-response += msg
-
-response = response.encode("ISO-8859-1")
-
-port = 28333
+PORT = 28333
 IP_addr = "192.168.1.144"
 
 if __name__ == "__main__":
+    
+    # Response setup
+    
+    with open("index.html", 'rb') as f:
+        msg = f.read()
+    
+    response = "HTTP/1.1 200 OK\r\n"
+    response += "Content-Type: text/html\r\n"
+    response += f"Content-Length: {len(msg)}\r\n"
+    response += "Connection: close\r\n"
+    response += "\r\n"
+    
+    
+    response = response.encode("ISO-8859-1")
+    response += msg
     
     # Usage:
     # server.py [PORT]
     
     if(len(sys.argv) > 1):
-        port = int(sys.argv[1])
+        PORT = int(sys.argv[1])
         
     
     try:
@@ -31,11 +35,11 @@ if __name__ == "__main__":
             s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             
             # use '' for localhost
-            s.bind((IP_addr, port))
+            s.bind((IP_addr, PORT))
             print("Server address: ", IP_addr)
             
             s.listen()
-            print(f"Listening on port {port}...")
+            print(f"Listening on PORT {PORT}...")
             
             
             while True:
