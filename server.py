@@ -1,19 +1,32 @@
-import sys
+import sys, os
 import socket
+import traceback
 
+MIME = {
+    ".txt"  : "text/plain",
+    ".html" : "text/html",
+    ".htm"  : "test/html",
+    ".pdf"  : "application/pdf",
+    ".xml"  : "application/xml",
+    ".gif"  : "image/gif",
+    ".bmp"  : "image/bmp",
+    ".jpeg" : "image/jpeg"
+}
 
-PORT = 28333
-IP_addr = "192.168.1.144"
-
-if __name__ == "__main__":
+def make_resp(request: bytes) -> bytes:
+    file_name = request.split('\r\n')[0].split(' ')[1]
     
     # Response setup
+    ext = os.path.splitext(file_name)[1]
     
-    with open("index.html", 'rb') as f:
-        msg = f.read()
+    try:
+        with open(file_name, 'rb') as f:
+            msg = f.read()
+    except:
+        return "HTTP/1.1 404 NOT FOUND\r\n"
     
     response = "HTTP/1.1 200 OK\r\n"
-    response += "Content-Type: text/html\r\n"
+    response += f"Content-Type: {MIME.get(ext, 'application/octet-stream')}\r\n"
     response += f"Content-Length: {len(msg)}\r\n"
     response += "Connection: close\r\n"
     response += "\r\n"
@@ -21,6 +34,15 @@ if __name__ == "__main__":
     
     response = response.encode("ISO-8859-1")
     response += msg
+    
+    return response
+
+PORT = 28333
+IP_addr = "192.168.1.144"
+
+if __name__ == "__main__":
+    
+    
     
     # Usage:
     # server.py [PORT]
@@ -46,6 +68,8 @@ if __name__ == "__main__":
                 new_sock, new_addr = s.accept()
                 print("Client: ", new_addr)
                 
+                # Request reciver
+                
                 request = b""
                 
                 while True:
@@ -58,17 +82,20 @@ if __name__ == "__main__":
                     if b"\r\n\r\n" in request:
                         break
 
-                request = request.decode("ISO-8859-1", errors='replace')
-                print("REQUEST METHOD: ", request[:10].split(' ')[0])
+                requestDECODED = request.decode("ISO-8859-1", errors='replace')
+                print("REQUEST METHOD: ", requestDECODED[:10].split(' ')[0])
                 print("REQUEST RECEIVED:")
-                print(request)
+                print(requestDECODED)
+                print("\r\n\r\n") # Visual purpose only
+                
+                response = make_resp(request)
                 
                 new_sock.sendall(response)
                 print("Successfully responded.")
                 
                 new_sock.close()
                 print("Client socket closed.")
-    except Exception as e:
+    except:
         print("Server failed!")
-        print(e)
+        print(traceback.format_exec())
     

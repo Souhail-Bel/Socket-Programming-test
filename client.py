@@ -1,5 +1,6 @@
 import sys
 import socket
+import traceback
 
 
 host = "example.com"
@@ -42,7 +43,6 @@ if __name__ == "__main__":
 
             print(res.decode("ISO-8859-1", errors='replace'))
             
-    except Exception as e:
-        print("Connection failed!")
-        print(e)
+    except:
+        print(traceback.format_exec())
     
