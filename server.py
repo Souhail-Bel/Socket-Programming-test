@@ -13,8 +13,8 @@ MIME = {
     ".jpeg" : "image/jpeg"
 }
 
-def make_resp(request: bytes) -> bytes:
-    file_name = request.split('\r\n')[0].split(' ')[1]
+def make_resp(request: str) -> bytes:
+    file_name = request.split('\r\n')[0].split(' ')[1][1:]
     
     # Response setup
     ext = os.path.splitext(file_name)[1]
@@ -22,8 +22,9 @@ def make_resp(request: bytes) -> bytes:
     try:
         with open(file_name, 'rb') as f:
             msg = f.read()
-    except:
-        return "HTTP/1.1 404 NOT FOUND\r\n"
+    except Exception as e:
+        print(e)
+        return "HTTP/1.1 404 NOT FOUND\r\n".encode("ISO-8859-1")
     
     response = "HTTP/1.1 200 OK\r\n"
     response += f"Content-Type: {MIME.get(ext, 'application/octet-stream')}\r\n"
@@ -82,10 +83,10 @@ if __name__ == "__main__":
                     if b"\r\n\r\n" in request:
                         break
 
-                requestDECODED = request.decode("ISO-8859-1", errors='replace')
-                print("REQUEST METHOD: ", requestDECODED[:10].split(' ')[0])
+                request = request.decode("ISO-8859-1", errors='replace')
+                print("REQUEST METHOD: ", request[:10].split(' ')[0])
                 print("REQUEST RECEIVED:")
-                print(requestDECODED)
+                print(request)
                 print("\r\n\r\n") # Visual purpose only
                 
                 response = make_resp(request)

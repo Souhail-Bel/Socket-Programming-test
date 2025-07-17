@@ -17,7 +17,7 @@ if __name__ == "__main__":
         if(len(sys.argv) > 2):
             port = int(sys.argv[2])
     
-    request = "GET / HTTP/1.1\r\n"
+    request = "GET /index.html HTTP/1.1\r\n"
     request += f"Host: {host}\r\n"
     request += "Connection: close\r\n"
     request += "\r\n" # important empty line
