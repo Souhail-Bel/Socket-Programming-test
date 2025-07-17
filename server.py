@@ -55,7 +55,7 @@ if __name__ == "__main__":
                         break
 
                 request = request.decode("ISO-8859-1", errors='replace')
-                print("REQUEST METHOD: ", request.split(' ')[0])
+                print("REQUEST METHOD: ", request[:10].split(' ')[0])
                 print("REQUEST RECEIVED:")
                 print(request)
                 
