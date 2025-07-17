@@ -16,14 +16,13 @@ MIME = {
 }
 
 
-
 # Not found response
 
-NOT_FOUND = "HTTP/1.1 404 NOT FOUND\r\n"
+NOT_FOUND = "HTTP/1.1 404 Not Found\r\n"
 NOT_FOUND += "Content-Type: text/plain\r\n"
-NOT_FOUND += "Content-Length: 18\r\n"
+NOT_FOUND += "Content-Length: 16\r\n"
 NOT_FOUND += "Connection: close\r\n"
-NOT_FOUND += "404 NOT FOUND :P\r\n"
+NOT_FOUND += "404 NOT FOUND :P"
 NOT_FOUND = NOT_FOUND.encode("ISO-8859-1")
 
 def make_resp(request: str) -> bytes:
@@ -97,10 +96,10 @@ if __name__ == "__main__":
                         break
 
                 request = request.decode("ISO-8859-1", errors='replace')
-                print("REQUEST METHOD: ", request[:10].split(' ')[0])
-                print("REQUEST RECEIVED:")
-                print(request)
-                print("\r\n\r\n") # Visual purpose only
+                # print("REQUEST METHOD: ", request[:10].split(' ')[0])
+                # print("REQUEST RECEIVED:")
+                # print(request)
+                # print("\r\n\r\n") # Visual purpose only
                 
                 response = make_resp(request)
                 

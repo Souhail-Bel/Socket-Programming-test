@@ -5,19 +5,22 @@ import traceback
 
 host = "example.com"
 port = 80
+file = "index.html"
 
 
 if __name__ == "__main__":
     
     # Usage:
-    # client.py [HOST] [PORT]
+    # client.py [HOST] [PORT] [FILE]
     
     if(len(sys.argv) > 1):
         host = sys.argv[1]
         if(len(sys.argv) > 2):
             port = int(sys.argv[2])
+            if(len(sys.argv) > 3):
+                file = sys.argv[3]
     
-    request = "GET /index.html HTTP/1.1\r\n"
+    request = f"GET /{file} HTTP/1.1\r\n"
     request += f"Host: {host}\r\n"
     request += "Connection: close\r\n"
     request += "\r\n" # important empty line
