@@ -13,6 +13,15 @@ MIME = {
     ".jpeg" : "image/jpeg"
 }
 
+# Not found response
+
+NOT_FOUND = "HTTP/1.1 404 NOT FOUND\r\n"
+NOT_FOUND += "Content-Type: text/plain\r\n"
+NOT_FOUND += "Content-Length: 16\r\n"
+NOT_FOUND += "Connection: close\r\n"
+NOT_FOUND += "404 NOT FOUND :P"
+NOT_FOUND = NOT_FOUND.encode("ISO-8859-1")
+
 def make_resp(request: str) -> bytes:
     file_name = request.split('\r\n')[0].split(' ')[1][1:]
     
@@ -24,7 +33,7 @@ def make_resp(request: str) -> bytes:
             msg = f.read()
     except Exception as e:
         print(e)
-        return "HTTP/1.1 404 NOT FOUND\r\n".encode("ISO-8859-1")
+        return NOT_FOUND
     
     response = "HTTP/1.1 200 OK\r\n"
     response += f"Content-Type: {MIME.get(ext, 'application/octet-stream')}\r\n"
