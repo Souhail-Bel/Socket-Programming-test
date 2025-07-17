@@ -97,5 +97,5 @@ if __name__ == "__main__":
                 print("Client socket closed.")
     except:
         print("Server failed!")
-        print(traceback.format_exec())
+        print(traceback.format_exc())
     

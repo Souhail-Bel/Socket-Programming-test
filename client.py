@@ -44,5 +44,5 @@ if __name__ == "__main__":
             print(res.decode("ISO-8859-1", errors='replace'))
             
     except:
-        print(traceback.format_exec())
+        print(traceback.format_exc())
     
