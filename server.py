@@ -28,6 +28,10 @@ NOT_FOUND = NOT_FOUND.encode("ISO-8859-1")
 def make_resp(request: str) -> bytes:
     file_name = request.split('\r\n')[0].split(' ')[1][1:]
     
+    # Defaulting to index.html if no file is specified
+    if not file_name:
+        file_name = "index.html"
+    
     # Response setup
     ext = os.path.splitext(file_name)[1]
     
