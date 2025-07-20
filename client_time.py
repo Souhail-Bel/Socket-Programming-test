@@ -1,6 +1,7 @@
 import sys
 import socket
 import traceback
+# import struct
 
 
 host = "time.nist.gov"
@@ -21,8 +22,10 @@ if __name__ == "__main__":
                 if not buff:
                     break
                 res += buff
-
-            print(res.decode("ISO-8859-1", errors='replace'))
+            # !: Network byte order, I: unsigned
+            # t = struct.unpack('!I', res)[0]
+            t = int.from_bytes(res, "big")
+            print(t)
             
     except:
         print(traceback.format_exc())
