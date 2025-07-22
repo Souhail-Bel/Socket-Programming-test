@@ -69,6 +69,17 @@ def get_tcp_data(file_name: str) -> bytes:
     
     return ret
 
+def build_pseudo_header(src_IP: bytes, dst_IP: bytes, TCP_length: int) -> bytes:
+    
+    ret = b''
+    
+    Z = b'\0'
+    PTCL = b'\6'
+    
+    ret = src_IP + dst_IP + Z + PTCL + TCP_length.to_bytes(2, "big")
+    
+    return ret
+
 if __name__ == "__main__":
     
     # The TCP data used here are from Beej's Guide
@@ -88,4 +99,6 @@ if __name__ == "__main__":
         TCP_data.append(TCP_data_file)
         TCP_length.append(len(TCP_data_file))
     
-    
+        IP_pseudo_headers.append(build_pseudo_header(IP_addrs[-1][0], IP_addrs[-1][1], TCP_length[-1]))
+        
+        print(IP_pseudo_headers[-1].hex())
