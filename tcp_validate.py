@@ -92,13 +92,17 @@ if __name__ == "__main__":
     TCP_length          = []
     
     for i in range(10):
+        
+        # Get IP addresses
         src_dst = get_addrs(f"tcp_addrs_{i}.txt")
         IP_addrs.append(split_addrs_src_dst(src_dst))
         
+        # Get TCP data
         TCP_data_file = get_tcp_data(f"tcp_data_{i}.dat")
         TCP_data.append(TCP_data_file)
         TCP_length.append(len(TCP_data_file))
     
+        # Build IP pseudo headers
         IP_pseudo_headers.append(build_pseudo_header(IP_addrs[-1][0], IP_addrs[-1][1], TCP_length[-1]))
         
         print(IP_pseudo_headers[-1].hex())
