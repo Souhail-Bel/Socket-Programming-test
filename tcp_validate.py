@@ -73,36 +73,52 @@ def build_pseudo_header(src_IP: bytes, dst_IP: bytes, TCP_length: int) -> bytes:
     
     ret = b''
     
-    Z = b'\0'
-    PTCL = b'\6'
+    Z = b'\x00'
+    PTCL = b'\x06'
     
     ret = src_IP + dst_IP + Z + PTCL + TCP_length.to_bytes(2, "big")
     
     return ret
+
+
+def compute_checksum(pseudo_header: bytes, TCP_data: bytes) -> int:
+    
+    return 0
+
 
 if __name__ == "__main__":
     
     # The TCP data used here are from Beej's Guide
     # https://github.com/beejjorgensen/bgnet0/tree/main/source/exercises/tcpcksum
     
-    IP_addrs            = []
-    IP_pseudo_headers   = []
+    # IP_addrs            = []
+    # IP_pseudo_headers   = []
     
-    TCP_data            = []
-    TCP_length          = []
+    # TCP_data            = []
+    # TCP_data_cksum_zero = []
+    # TCP_length          = []
+    
+    TCP_checksum_start  = 16
+    TCP_checksum_end    = 18 # [CHECKSUM[
+    # TCP_checksums       = []
     
     for i in range(10):
         
         # Get IP addresses
         src_dst = get_addrs(f"tcp_addrs_{i}.txt")
-        IP_addrs.append(split_addrs_src_dst(src_dst))
+        IP_addr = split_addrs_src_dst(src_dst)
         
         # Get TCP data
-        TCP_data_file = get_tcp_data(f"tcp_data_{i}.dat")
-        TCP_data.append(TCP_data_file)
-        TCP_length.append(len(TCP_data_file))
+        TCP_data = get_tcp_data(f"tcp_data_{i}.dat")
+        TCP_length = len(TCP_data)
+        
+        # Get checksum from TCP data and zero it
+        TCP_checksum = int.from_bytes(TCP_data[TCP_checksum_start:TCP_checksum_end], "big")
+        
+        TCP_cksum_zero = TCP_data[:TCP_checksum_start] + b'\x00\x00' + TCP_data[TCP_checksum_end:]
+        if TCP_length%2:
+            TCP_cksum_zero += b'\x00'
+        
     
         # Build IP pseudo headers
-        IP_pseudo_headers.append(build_pseudo_header(IP_addrs[-1][0], IP_addrs[-1][1], TCP_length[-1]))
-        
-        print(IP_pseudo_headers[-1].hex())
+        IP_pseudo_header = build_pseudo_header(IP_addr[0], IP_addr[1], TCP_length)
