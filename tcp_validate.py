@@ -1,5 +1,6 @@
 # TCP RFC 793
 
+
 # TCP Header format
 
  # 0                   1                   2                   3   
@@ -22,6 +23,18 @@
 # |                             data                              |
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    
+
+# IP Pseudo header
+
+ # +--------+--------+--------+--------+
+ # |           Source Address          |
+ # +--------+--------+--------+--------+ 
+ # |         Destination Address       |
+ # +--------+--------+--------+--------+
+ # |  zero  |  PTCL  |    TCP Length   |
+ # +--------+--------+--------+--------+
+
+   
    
 TCP_DATA_DIR = "tcp_data/"
 
@@ -33,6 +46,7 @@ def get_addrs(file_name: str) -> list:
     return ret
 
 def convert_addr_to_bytes(IP_addr: str) -> bytes:
+    
     res = b''
     
     for byte in IP_addr.split('.'):
@@ -47,14 +61,31 @@ def split_addrs_src_dst(src_dst: list) -> tuple:
     
     return (src_addr, dst_addr)
 
+def get_tcp_data(file_name: str) -> bytes:
+    
+    ret = b''
+    with open(TCP_DATA_DIR + file_name, 'rb') as f:
+        ret = f.read()
+    
+    return ret
+
 if __name__ == "__main__":
-    IP_addrs = []   
+    
+    # The TCP data used here are from Beej's Guide
+    # https://github.com/beejjorgensen/bgnet0/tree/main/source/exercises/tcpcksum
+    
+    IP_addrs            = []
+    IP_pseudo_headers   = []
+    
+    TCP_data            = []
+    TCP_length          = []
+    
     for i in range(10):
         src_dst = get_addrs(f"tcp_addrs_{i}.txt")
-        # IP_addrs.append
-        print(split_addrs_src_dst(src_dst))
-    
-    # IP_addr_0 = IP_addrs[0]
-    
-    # with open(TCP_DATA_DIR + f"tcp_data_{0}.dat", 'rb') as f:
+        IP_addrs.append(split_addrs_src_dst(src_dst))
         
+        TCP_data_file = get_tcp_data(f"tcp_data_{i}.dat")
+        TCP_data.append(TCP_data_file)
+        TCP_length.append(len(TCP_data_file))
+    
+    
