@@ -81,9 +81,23 @@ def build_pseudo_header(src_IP: bytes, dst_IP: bytes, TCP_length: int) -> bytes:
     return ret
 
 
-def compute_checksum(pseudo_header: bytes, TCP_data: bytes) -> int:
+def compute_checksum(pseudo_header: bytes, TCP_data_cksum_zero: bytes) -> int:
     
-    return 0
+    # "The checksum field is the 16 bit one's complement of the one's complement sum of all 16 bit words in the header and text."    
+    
+    data = pseudo_header + TCP_data_cksum_zero
+    count = 0
+    
+    # Sum all 16-bit WORDs
+    count = sum(int.from_bytes(data[offset:offset+2], "big") for offset in range(0,len(data),2))
+    
+    # Perform carry around
+    while count >> 16:
+        count = (count & 0xFFFF) + (count >> 16)
+    
+    # Return the one's complement
+    return (~count) & 0xFFFF
+    
 
 
 if __name__ == "__main__":
@@ -122,3 +136,10 @@ if __name__ == "__main__":
     
         # Build IP pseudo headers
         IP_pseudo_header = build_pseudo_header(IP_addr[0], IP_addr[1], TCP_length)
+        
+        comp_cksum = compute_checksum(IP_pseudo_header, TCP_cksum_zero)
+        
+        if comp_cksum == TCP_checksum:
+            print("PASS")
+        else:
+            print("FAIL")
