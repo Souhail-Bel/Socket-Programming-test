@@ -175,177 +175,177 @@ def find_router_for_ip(routers: dict, ip: str) -> str:
 # Uncomment this code to have it run instead of the real main.
 # Be sure to comment it back out before you submit!
 
-def my_tests():
-    print("-------------------------------------")
-    print("This is the result of my custom tests")
-    print("-------------------------------------")
+# def my_tests():
+    # print("-------------------------------------")
+    # print("This is the result of my custom tests")
+    # print("-------------------------------------")
 
-    ipv4_test_1 = "192.168.1.1"
-    ipv4_test_2 = "216.58.205.46"
+    # ipv4_test_1 = "192.168.1.1"
+    # ipv4_test_2 = "216.58.205.46"
     
-    ipv4_test_1_val = 0xc0a80101
-    ipv4_test_2_val = 0xd83acd2e
+    # ipv4_test_1_val = 0xc0a80101
+    # ipv4_test_2_val = 0xd83acd2e
 
-    print("TEST: ipv4_to_value")
-    print(ipv4_test_1+"... ", end='')
-    res = ipv4_to_value(ipv4_test_1)
-    if res == ipv4_test_1_val:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
+    # print("TEST: ipv4_to_value")
+    # print(ipv4_test_1+"... ", end='')
+    # res = ipv4_to_value(ipv4_test_1)
+    # if res == ipv4_test_1_val:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
 
-    print(ipv4_test_2+"... ", end='')
-    res = ipv4_to_value(ipv4_test_2)
-    if res == ipv4_test_2_val:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
-    print()
+    # print(ipv4_test_2+"... ", end='')
+    # res = ipv4_to_value(ipv4_test_2)
+    # if res == ipv4_test_2_val:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
+    # print()
     
     
-    print("TEST: value_to_ipv4")
-    print(f"{ipv4_test_1_val}...", end='')
-    res = value_to_ipv4(ipv4_test_1_val)
-    if res == ipv4_test_1:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
+    # print("TEST: value_to_ipv4")
+    # print(f"{ipv4_test_1_val}...", end='')
+    # res = value_to_ipv4(ipv4_test_1_val)
+    # if res == ipv4_test_1:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
     
-    print(f"{ipv4_test_2_val}...", end='')
-    res = value_to_ipv4(ipv4_test_2_val)
-    if res == ipv4_test_2:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
-    print()
+    # print(f"{ipv4_test_2_val}...", end='')
+    # res = value_to_ipv4(ipv4_test_2_val)
+    # if res == ipv4_test_2:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
+    # print()
     
     
-    subnet_mask_test_1 = "/16"
-    subnet_mask_test_2 = "10.20.30.40/23"
+    # subnet_mask_test_1 = "/16"
+    # subnet_mask_test_2 = "10.20.30.40/23"
 
-    subnet_mask_test_1_val = 0xffff0000
-    subnet_mask_test_2_val = 0xfffffe00
+    # subnet_mask_test_1_val = 0xffff0000
+    # subnet_mask_test_2_val = 0xfffffe00
     
-    print("TEST: get_subnet_mask_value")
-    print(f"{subnet_mask_test_1}...", end='')
-    res = get_subnet_mask_value(subnet_mask_test_1)
-    if res == subnet_mask_test_1_val:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
+    # print("TEST: get_subnet_mask_value")
+    # print(f"{subnet_mask_test_1}...", end='')
+    # res = get_subnet_mask_value(subnet_mask_test_1)
+    # if res == subnet_mask_test_1_val:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
         
-    print(f"{subnet_mask_test_2}...", end='')
-    res = get_subnet_mask_value(subnet_mask_test_2)
-    if res == subnet_mask_test_2_val:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
-    print()
+    # print(f"{subnet_mask_test_2}...", end='')
+    # res = get_subnet_mask_value(subnet_mask_test_2)
+    # if res == subnet_mask_test_2_val:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
+    # print()
     
     
-    same_subnet_ip1_test_1 = "10.23.121.17"
-    same_subnet_ip2_test_1 = "10.23.121.225"
-    same_subnet_slash_test_1 = "/23"
-    same_subnet_test_1_val = True
+    # same_subnet_ip1_test_1 = "10.23.121.17"
+    # same_subnet_ip2_test_1 = "10.23.121.225"
+    # same_subnet_slash_test_1 = "/23"
+    # same_subnet_test_1_val = True
 
-    same_subnet_ip1_test_2 = "10.23.230.22"
-    same_subnet_ip2_test_2 = "10.24.121.225"
-    same_subnet_slash_test_2 = "/16"
-    same_subnet_test_2_val = False
+    # same_subnet_ip1_test_2 = "10.23.230.22"
+    # same_subnet_ip2_test_2 = "10.24.121.225"
+    # same_subnet_slash_test_2 = "/16"
+    # same_subnet_test_2_val = False
     
-    print("TEST: ips_same_subnet")
-    print(f"{same_subnet_ip1_test_1}, {same_subnet_ip2_test_1}, {same_subnet_slash_test_1}...", end='')
-    res = ips_same_subnet(same_subnet_ip1_test_1,
-                            same_subnet_ip2_test_1,
-                            same_subnet_slash_test_1)
-    if res == same_subnet_test_1_val:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
+    # print("TEST: ips_same_subnet")
+    # print(f"{same_subnet_ip1_test_1}, {same_subnet_ip2_test_1}, {same_subnet_slash_test_1}...", end='')
+    # res = ips_same_subnet(same_subnet_ip1_test_1,
+                            # same_subnet_ip2_test_1,
+                            # same_subnet_slash_test_1)
+    # if res == same_subnet_test_1_val:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
     
-    print(f"{same_subnet_ip1_test_2}, {same_subnet_ip2_test_2}, {same_subnet_slash_test_2}...", end='')
-    res = ips_same_subnet(same_subnet_ip1_test_2,
-                            same_subnet_ip2_test_2,
-                            same_subnet_slash_test_2)
-    if res == same_subnet_test_2_val:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
-    print()
+    # print(f"{same_subnet_ip1_test_2}, {same_subnet_ip2_test_2}, {same_subnet_slash_test_2}...", end='')
+    # res = ips_same_subnet(same_subnet_ip1_test_2,
+                            # same_subnet_ip2_test_2,
+                            # same_subnet_slash_test_2)
+    # if res == same_subnet_test_2_val:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
+    # print()
 
     
-    get_network_ip_value_test = 0x01020304
-    get_network_netmask_test = 0xffffff00
-    get_network_test_val = 0x01020300
+    # get_network_ip_value_test = 0x01020304
+    # get_network_netmask_test = 0xffffff00
+    # get_network_test_val = 0x01020300
     
-    print("TEST: get_network")
-    print(f"0x{get_network_ip_value_test:02x}, 0x{get_network_netmask_test:02x}...", end='')
-    res = get_network(get_network_ip_value_test, get_network_netmask_test)
-    if res == get_network_test_val:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
-    print()
+    # print("TEST: get_network")
+    # print(f"0x{get_network_ip_value_test:02x}, 0x{get_network_netmask_test:02x}...", end='')
+    # res = get_network(get_network_ip_value_test, get_network_netmask_test)
+    # if res == get_network_test_val:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
+    # print()
     
-    find_router_for_ip_routers_test_1 = {
-        "1.2.3.1": {
-            "netmask": "/24"
-        },
-        "1.2.4.1": {
-            "netmask": "/24"
-        }
-    }
-    find_router_for_ip_ip_test_1 = "1.2.3.5"
-    find_router_for_ip_test_1_val = "1.2.3.1"
+    # find_router_for_ip_routers_test_1 = {
+        # "1.2.3.1": {
+            # "netmask": "/24"
+        # },
+        # "1.2.4.1": {
+            # "netmask": "/24"
+        # }
+    # }
+    # find_router_for_ip_ip_test_1 = "1.2.3.5"
+    # find_router_for_ip_test_1_val = "1.2.3.1"
 
 
-    find_router_for_ip_routers_test_2 = {
-        "1.2.3.1": {
-            "netmask": "/24"
-        },
-        "1.2.4.1": {
-            "netmask": "/24"
-        }
-    }
-    find_router_for_ip_ip_test_2 = "1.2.5.6"
-    find_router_for_ip_test_2_val = None
+    # find_router_for_ip_routers_test_2 = {
+        # "1.2.3.1": {
+            # "netmask": "/24"
+        # },
+        # "1.2.4.1": {
+            # "netmask": "/24"
+        # }
+    # }
+    # find_router_for_ip_ip_test_2 = "1.2.5.6"
+    # find_router_for_ip_test_2_val = None
     
-    print("TEST: find_router_for_ip")
-    print("Dictionary router, " + find_router_for_ip_ip_test_1 + "...", end='')
-    res = find_router_for_ip(find_router_for_ip_routers_test_1, find_router_for_ip_ip_test_1)
-    if res == find_router_for_ip_test_1_val:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
-    print("Dictionary router, " + find_router_for_ip_ip_test_2 + "...", end='')
-    res = find_router_for_ip(find_router_for_ip_routers_test_2, find_router_for_ip_ip_test_2)
-    if res == find_router_for_ip_test_2_val:
-        print("PASS")
-    else:
-        print("FAIL")
-        print(f"Got '{res}' instead.")
-        return
-    print()
+    # print("TEST: find_router_for_ip")
+    # print("Dictionary router, " + find_router_for_ip_ip_test_1 + "...", end='')
+    # res = find_router_for_ip(find_router_for_ip_routers_test_1, find_router_for_ip_ip_test_1)
+    # if res == find_router_for_ip_test_1_val:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
+    # print("Dictionary router, " + find_router_for_ip_ip_test_2 + "...", end='')
+    # res = find_router_for_ip(find_router_for_ip_routers_test_2, find_router_for_ip_ip_test_2)
+    # if res == find_router_for_ip_test_2_val:
+        # print("PASS")
+    # else:
+        # print("FAIL")
+        # print(f"Got '{res}' instead.")
+        # return
+    # print()
     
 
 ## -------------------------------------------
