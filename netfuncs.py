@@ -113,7 +113,7 @@ def ips_same_subnet(ip1: str, ip2: str, slash: str) -> bool:
     res = (ipv4_to_value(ip1) & mask) == (ipv4_to_value(ip2) & mask)
     return res
 
-def get_network(ip_value, netmask):
+def get_network(ip_value: int, netmask: int) -> int:
     """
     Return the network portion of an address value as integer type.
 
@@ -124,10 +124,10 @@ def get_network(ip_value, netmask):
     return:   0x01020300
     """
 
-    # TODO -- write me!
-    pass
+    res = ip_value & netmask
+    return res
 
-def find_router_for_ip(routers, ip):
+def find_router_for_ip(routers: dict, ip: str) -> str:
     """
     Search a dictionary of routers (keyed by router IP) to find which
     router belongs to the same subnet as the given IP.
@@ -166,8 +166,11 @@ def find_router_for_ip(routers, ip):
     return: None
     """
 
-    # TODO -- write me!
-    pass
+    res = None
+    for IP_router in routers.keys():
+        if ips_same_subnet(ip, IP_router, routers[IP_router]["netmask"]):
+            res = IP_router
+    return res
 
 # Uncomment this code to have it run instead of the real main.
 # Be sure to comment it back out before you submit!
@@ -284,6 +287,66 @@ def my_tests():
         print("FAIL")
         print(f"Got '{res}' instead.")
         return
+    print()
+
+    
+    get_network_ip_value_test = 0x01020304
+    get_network_netmask_test = 0xffffff00
+    get_network_test_val = 0x01020300
+    
+    print("TEST: get_network")
+    print(f"0x{get_network_ip_value_test:02x}, 0x{get_network_netmask_test:02x}...", end='')
+    res = get_network(get_network_ip_value_test, get_network_netmask_test)
+    if res == get_network_test_val:
+        print("PASS")
+    else:
+        print("FAIL")
+        print(f"Got '{res}' instead.")
+        return
+    print()
+    
+    find_router_for_ip_routers_test_1 = {
+        "1.2.3.1": {
+            "netmask": "/24"
+        },
+        "1.2.4.1": {
+            "netmask": "/24"
+        }
+    }
+    find_router_for_ip_ip_test_1 = "1.2.3.5"
+    find_router_for_ip_test_1_val = "1.2.3.1"
+
+
+    find_router_for_ip_routers_test_2 = {
+        "1.2.3.1": {
+            "netmask": "/24"
+        },
+        "1.2.4.1": {
+            "netmask": "/24"
+        }
+    }
+    find_router_for_ip_ip_test_2 = "1.2.5.6"
+    find_router_for_ip_test_2_val = None
+    
+    print("TEST: find_router_for_ip")
+    print("Dictionary router, " + find_router_for_ip_ip_test_1 + "...", end='')
+    res = find_router_for_ip(find_router_for_ip_routers_test_1, find_router_for_ip_ip_test_1)
+    if res == find_router_for_ip_test_1_val:
+        print("PASS")
+    else:
+        print("FAIL")
+        print(f"Got '{res}' instead.")
+        return
+    print("Dictionary router, " + find_router_for_ip_ip_test_2 + "...", end='')
+    res = find_router_for_ip(find_router_for_ip_routers_test_2, find_router_for_ip_ip_test_2)
+    if res == find_router_for_ip_test_2_val:
+        print("PASS")
+    else:
+        print("FAIL")
+        print(f"Got '{res}' instead.")
+        return
+    print()
+    
 
 ## -------------------------------------------
 ## Do not modify below this line
