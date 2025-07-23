@@ -5,7 +5,7 @@ import json
 # https://github.com/beejjorgensen/bgnet0/blob/main/source/exercises/netfuncs/
 
 
-def ipv4_to_value(ipv4_addr):
+def ipv4_to_value(ipv4_addr: str) -> int:
     """
     Convert a dots-and-numbers IP address to a single 32-bit numeric
     value of integer type. Returns an integer type.
@@ -18,11 +18,16 @@ def ipv4_to_value(ipv4_addr):
     ipv4_addr: "1.2.3.4"
     return:    16909060  (Which is 0x01020304 hex)
     """
+    
+    res = 0
+    coeff = 24
+    for sec in ipv4_addr.split('.'):
+        res += (int(sec) << coeff)
+        coeff -= 8
+    
+    return res
 
-    # TODO -- write me!
-    pass
-
-def value_to_ipv4(addr):
+def value_to_ipv4(addr: int) -> str:
     """
     Convert a single 32-bit numeric value of integer type to a
     dots-and-numbers IP address. Returns a string type.
@@ -38,8 +43,17 @@ def value_to_ipv4(addr):
     return: "1.2.3.4"
     """
 
-    # TODO -- write me!
-    pass
+    res = ""
+    coeff = 24
+    offset = 0xff << coeff
+    
+    for _ in range(4):
+        res += f"{(addr & offset) >> coeff}."
+        offset >>= 8
+        coeff -= 8
+    return res[:-1]
+
+
 
 def get_subnet_mask_value(slash):
     """
@@ -151,16 +165,59 @@ def find_router_for_ip(routers, ip):
 
 # Uncomment this code to have it run instead of the real main.
 # Be sure to comment it back out before you submit!
-"""
+
 def my_tests():
     print("-------------------------------------")
     print("This is the result of my custom tests")
     print("-------------------------------------")
 
-    print(x)
+    ipv4_test_1 = "192.168.1.1"
+    ipv4_test_1_val = 0xc0a80101
+    ipv4_test_2 = "216.58.205.46"
+    ipv4_test_2_val = 0xd83acd2e
 
-    # Add custom test code here
-"""
+    print("TEST: ipv4_to_value")
+    print(ipv4_test_1+"... ", end='')
+    res = ipv4_to_value(ipv4_test_1)
+    if res == ipv4_test_1_val:
+        print("PASS")
+    else:
+        print("FAIL")
+        print(f"Got '{res}' instead.")
+        return
+
+    print(ipv4_test_2+"... ", end='')
+    res = ipv4_to_value(ipv4_test_2)
+    if res == ipv4_test_2_val:
+        print("PASS")
+    else:
+        print("FAIL")
+        print(f"Got '{res}' instead.")
+        return
+    print()
+    
+    print("TEST: value_to_ipv4")
+    print(f"{ipv4_test_1_val}...", end='')
+    res = value_to_ipv4(ipv4_test_1_val)
+    if res == ipv4_test_1:
+        print("PASS")
+    else:
+        print("FAIL")
+        print(f"Got '{res}' instead.")
+        return
+    
+    print(f"{ipv4_test_2_val}...", end='')
+    res = value_to_ipv4(ipv4_test_2_val)
+    if res == ipv4_test_2:
+        print("PASS")
+    else:
+        print("FAIL")
+        print(f"Got '{res}' instead.")
+        return
+    print()
+    
+    
+    
 
 ## -------------------------------------------
 ## Do not modify below this line
