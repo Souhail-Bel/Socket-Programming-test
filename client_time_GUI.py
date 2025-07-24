@@ -7,12 +7,17 @@ from time import strftime, localtime
 
 import tkinter as tk
 
+
+t = 0
+
 # Function to update the digital clock label
 def tick():
+    global t
     str_NIST_t = strftime(DATE_FORMAT, localtime(t - dt))
     str_SYS_t  = strftime(DATE_FORMAT, localtime(int(time.time())))
     NIST_clock.config(text=str_NIST_t)
     SYS_clock.config(text=str_SYS_t)
+    t += 1
     NIST_clock.after(1000, tick)
 
 
@@ -44,9 +49,9 @@ if __name__ == "__main__":
                 
             # !: Network byte order, I: unsigned
             # t = struct.unpack('!I', res)[0]
-            # t = 3961996701 # For when the server fails
             t = int.from_bytes(res, "big")
             t_sys = int(time.time()) + dt
+            # t = t_sys # When the server fails us
             
             print("===== TIME SINCE 1900-01-01 =====")
             print("NIST :", t, " seconds")
